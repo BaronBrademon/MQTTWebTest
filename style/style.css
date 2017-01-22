@@ -1,0 +1,14 @@
+.box{
+    width: 500px;
+    height: 200px;
+    background-color: lightblue;
+    border: 3px dashed royalblue;
+}
+
+.box2{
+    width: 100px;
+    height: 25px;
+    position: 50px 50px;
+    background-color: red;
+    border: 2px dashed orange;
+}
