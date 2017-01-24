@@ -1,8 +1,11 @@
-.box{
-    width: 500px;
-    height: 200px;
+.box1{
+    width: 1200px;
+    height: 400px;
     background-color: lightblue;
     border: 3px dashed royalblue;
+    border-radius: 20px;
+    position: relative;
+    top: 40px;
 }
 
 .box2{
@@ -11,4 +14,23 @@
     position: 50px 50px;
     background-color: red;
     border: 2px dashed orange;
+}
+
+.ulclass{
+    list-style-type: none;
+    font-size: 16px;
+}
+
+.header{
+    width: 1200px;
+    height: 100px;
+    background:white;
+    border: 3px dashed black;
+    border-radius: 20px;
+}
+
+.headerimage{
+    position: relative;
+    top: 10px;
+    left: 10px;
 }

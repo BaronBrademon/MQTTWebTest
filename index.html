@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+      <link rel="stylesheet" href="style/style.css" />
+  </head>
+  <body onload="init();">
+      <div id = "header" class = "header">
+          <img src="images/synergysmalllogo.png" class="headerimage"/>
+          <h1 id="headerTitle"></h1>
+      </div>
+      <div id = "mqttMessages" class = "box1">
+              <ul id = "messages" class="ulclass">
+        <li>"Incomming"</li>
+      </ul>
+      </div>
+    <script src="mqttws31.js" type="text/javascript"></script>  
+  <script type="text/javascript">
+        var wsbroker = "broker.hivemq.com";
+        var wsport = 8000;
+        var client = new Paho.MQTT.Client(wsbroker, wsport, "" + parseInt(Math.random() * 100, 10));
+
+        client.onConnectionLost = function (responseObject) 
+        {
+          console.log("connection lost: " + responseObject.errorMessage);
+        };
+
+        client.onMessageArrived = function (message) 
+        {
+            if(document.getElementById('messages').children.length == 10)
+                {
+                    document.getElementById('messages').innerHTML = "";
+                    document.getElementById('messages').innerHTML += '<li>' + message.destinationName + ' -- ' + message.payloadString; + '</li>';
+                }
+            else{
+                document.getElementById('messages').innerHTML += '<li>' + message.destinationName + ' -- ' + message.payloadString; + '</li>';
+            }
+            
+            
+            //console.log(message.destinationName, ' -- ', message.payloadString);
+        };
+
+        var options = 
+        {
+          timeout: 3,
+          onSuccess: function () {
+            console.log("mqtt connected");
+            // Connection succeeded; subscribe to our topic, you can add multile lines of these
+            client.subscribe('#', {qos: 1});
+
+            //use the below if you want to publish to a topic on connect
+            message = new Paho.MQTT.Message("Hello");
+            message.destinationName = "/World";
+            client.send(message);
+
+          },
+          onFailure: function (message) {
+            console.log("Connection failed: " + message.errorMessage);
+          }
+        };
+
+        function init() {
+            document.getElementById('headerTitle').innerHTML = wsbroker + " - " + wsport;
+          client.connect(options);
+                      //document.getElementById("connect").onclick = screenMessage;
+        }
+      
+    </script>
+  </body>
+
+</html>
